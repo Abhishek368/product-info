@@ -1,0 +1,67 @@
+<div class='card'>
+    <div class='card-header'>
+        {{pageTitle}}
+    </div>
+    <div class='card-body'>
+        <div class='row'>
+            <div class= 'col-md-2'> Filter by:</div>
+            <div class='col-md-4'>
+                <input type='text' [(ngModel)] = 'listfilter' />
+            </div>
+        </div>
+        <div class='row'>
+            <div class='row'>
+                <div class='col-md-6'>
+                    <h4> Filtered by: {{listfilter}}</h4>
+                </div>
+            </div>
+            <div class='table-responsive' *ngIf='productlist.length'>
+                <table class='table'>
+                    <thead>
+                        <tr>
+                            <th>
+                                <button class ='btn btn-primary' [style.background-color] = "showImage?'green':'blue'" 
+                                (click) = 'toggleImage()'> 
+                                    {{showImage ? 'Hide' : 'Show'}} Image
+                                </button>
+                            </th>
+                            <th> product id </th>
+                            <th>Products</th> 
+                            <th>Code</th>
+                            <th>Available</th>
+                            <th>Price</th>
+                            <th>5 star rating</th>
+                        </tr>
+                    </thead>
+                    <tbody> 
+                        <tr *ngFor='let product of productlist'>
+                            <td>
+                              <img *ngIf = 'showImage' [src] = 'product.imageUrl'
+                               [title] = 'product.productName' 
+                               [style.width.px] = 'imageWidth'
+                               [style.height.px] ='imageHeight' 
+                               [style.margin.px] = 'imageMargin'>
+                           </td>
+                            <td>{{product.productId}}</td>
+                            <td>
+                                <a [routerLink] = "['/products' , product.productId]">
+                                {{product.productName}}
+                                </a>
+                            </td>
+                            <td>{{product.productCode | converttospaces: '-'}}</td>
+                            <td>{{product.releaseDate}}</td>
+                            <td>{{product.price | currency: 'INR'}}</td>
+                            <td><pm-star [rating] = 'product.starRating'
+                                (ratingclicked)='onRatingClicked($event)'></pm-star></td>
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+            
+        </div>
+
+
+    </div>
+
+</div>
